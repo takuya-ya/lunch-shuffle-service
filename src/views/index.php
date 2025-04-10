@@ -12,7 +12,7 @@
     </h1>
     <a href="./employees.php">社員を登録する</a>
 
-    <form action="./index.php" method="post">
+    <form action="shuffle" method="post">
         <button type="submit">シャッフルする</button>
     </form>
 
