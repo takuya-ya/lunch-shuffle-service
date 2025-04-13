@@ -8,9 +8,9 @@
 
 <body>
     <h1>
-        <a href="./index.php">シャッフルランチ</a>
+        <a href="/employee">シャッフルランチ</a>
     </h1>
-    <a href="./employees.php">社員を登録する</a>
+    <a href="employee">社員を登録する</a>
 
     <form action="shuffle" method="post">
         <button type="submit">シャッフルする</button>
