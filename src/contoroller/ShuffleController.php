@@ -1,14 +1,10 @@
 <?php
 
-class ShuffleController
-{
-    // $actionに'index'
-    public function run($action)
-    {
-        $this->$action();
-    }
+require_once __DIR__ . '/../core/Controller.php';
 
-    private function index()
+class ShuffleController extends Controller
+{
+    public function index()
     {
         $groups = [];
 
@@ -26,9 +22,8 @@ class ShuffleController
     }
 
 
-    private function create()
+    public function create()
     {
-
         $groups = [];
 
         // DBに接続
@@ -58,7 +53,5 @@ class ShuffleController
         }
 
         include __DIR__ . '/../views/index.php';
-
     }
-
 }
