@@ -54,7 +54,7 @@ class Application
         return [
             '/' => ['controller' => 'shuffle', 'action' => 'index'],
             '/shuffle' => ['controller' => 'shuffle', 'action' => 'create'],
-            '/employee' => ['controller' => 'employee', 'action' => 'idex'],
+            '/employee' => ['controller' => 'employee', 'action' => 'index'],
             '/employee/create' => ['controller' => 'employee', 'action' => 'create']
         ];
     }
