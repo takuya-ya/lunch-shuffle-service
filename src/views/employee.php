@@ -8,7 +8,7 @@
 
 <body>
     <div>
-        <a href="./index.php">シャッフルランチサービス</a>
+        <a href="/shuffle">シャッフルランチサービス</a>
     </div>
 
     <?php if ($errors): ?>
@@ -21,7 +21,7 @@
         </ul>
     <?php endif; ?>
 
-    <form action="./employees.php" method="post">
+    <form action="employee/create" method="post">
         <label for="name">社員名</label>
         <input type="text" name="name">
         <!-- <input type="submit" value="登録する">の書き方もありだが、シンプルな実装なので装飾出来る下記が主流-->

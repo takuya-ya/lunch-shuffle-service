@@ -3,6 +3,7 @@
 // ルート設定をRouterで行う
 require_once __DIR__ . '/core/Router.php';
 require_once __DIR__ . '/contoroller/ShuffleController.php';
+require_once __DIR__ . '/contoroller/EmployeeController.php';
 
 // 初期設定を行う？
 class Application
@@ -37,11 +38,12 @@ class Application
 
     // 配列で
     private function registerRoutes()
-
     {
         return [
             '/' => ['controller' => 'shuffle', 'action' => 'index'],
-            '/shuffle' => ['controller' => 'shuffle', 'action' => 'create']
+            '/shuffle' => ['controller' => 'shuffle', 'action' => 'create'],
+            '/employee' => ['controller' => 'employee', 'action' => 'index'],
+            '/employee/create' => ['controller' => 'employee', 'action' => 'create']
         ];
     }
 
