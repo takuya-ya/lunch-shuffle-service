@@ -1,10 +1,6 @@
 <?php
 
 // ルート設定をRouterで行う
-require_once __DIR__ . '/core/Router.php';
-require_once __DIR__ . '/core/HttpNotFoundException.php';
-require_once __DIR__ . '/contoroller/ShuffleController.php';
-require_once __DIR__ . '/contoroller/EmployeeController.php';
 
 // 初期設定を行う？
 class Application
