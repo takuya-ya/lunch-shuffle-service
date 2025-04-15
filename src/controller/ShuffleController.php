@@ -4,7 +4,6 @@ class ShuffleController extends Controller
 {
     public function index()
     {
-        $groups = [];
 
         // DBに接続
         $mysqli = new mysqli('db', 'test_user', 'pass', 'test_database');
@@ -16,7 +15,11 @@ class ShuffleController extends Controller
             throw new RuntimeException('mysqli接続エラー: ' . $mysqli->connect_error);
         }
 
-        include __DIR__ . '/../views/index.php';
+        return $this->render([
+                'groups' => [],
+        ]);
+        //ビューと分離する以前は下記でビューを表示していた
+        // include __DIR__ . '/../views/index.php';
     }
 
 
@@ -50,6 +53,11 @@ class ShuffleController extends Controller
             array_push($groups[0], $extra);
         }
 
-        include __DIR__ . '/../views/index.php';
+
+        return $this->render([
+            'groups' => $groups,
+        ], 'index' //このindexがtemplate。これがないとactiono()メソッドのcreateがtemplateとして渡されるが、該当するview fileは作成していない。index.phpと同じため、それを流用する。
+    );
+        // include __DIR__ . '/../views/index.php';
     }
 }
