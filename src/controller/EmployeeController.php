@@ -23,13 +23,15 @@ class EmployeeController extends Controller
 
         $mysqli->close();
 
+        return $this->render([
+            'title' => '社員の登録',
+            'employees' => $employees,
+            'errors' => []
+        ]);
         // データ追加後、即座に一覧に反映。また、POSTの重複によるデータの二重登録を防止
         // 登録ボタン推してもリロードはされない。
-        include __DIR__ . '/../views/employee.php';
-
+        // include __DIR__ . '/../views/employee.php';
     }
-
-
 
     public function create()
     {
@@ -66,13 +68,19 @@ class EmployeeController extends Controller
             $stmt->bind_param("s", $name);
             $stmt->execute();
             $stmt->close();
-            header('Location: /employee');
+            // ビューの分離以降、下記headerが無効になるので、社員登録ボタン押したらemployee/createに飛んでしまう。フレームワークの学習為、以下の修正は保留。
+            // header('Location: /employee');
 
             $mysqli->close();
 
+            return $this->render([
+                'title' => '社員の登録',
+                'errors' => $errors,
+                'employees' => $employees
+            ], 'index');
             // データ追加後、即座に一覧に反映。また、POSTの重複によるデータの二重登録を防止
             // 登録ボタン推してもリロードはされない。
-            include __DIR__ . '/../views/employee.php';
+            // include __DIR__ . '/../views/employee.php';
         }
     }
 }
