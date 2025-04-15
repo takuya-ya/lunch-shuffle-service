@@ -1,3 +1,4 @@
+<!-- views/shuffle/index.phpへ分離により不要。動画復習用にファイルを保管する-->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
