@@ -5,6 +5,9 @@
 // 初期設定を行う？
 class Application
 {
+    // このクラスで使用するのと、他のクラスにも汎用的に渡す事が出来る為、初期化をお粉う
+    public $request;
+
     protected $router;
     protected $response;
 
@@ -12,6 +15,7 @@ class Application
     {
         //urlとcontroller,actionの対応表を渡し、Routerがそれを管理する
             // 引数:url => [controller,action]
+        $this->request = new Request();
         $this->router = new Router($this->registerRoutes());
         $this->response = new Response();
     }
@@ -22,7 +26,7 @@ class Application
             // 引数：パス
             // 返り値 $params = [controller => 〇〇, action => 〇〇];
         try {
-            $params = $this->router->resolve($this->getPathInfo());
+            $params = $this->router->resolve($this->request->getPathInfo());
             if (!$params) {
                 throw new HttpNotFoundException();
             };
@@ -36,14 +40,15 @@ class Application
         $this->response->send();
     }
 
-    // controllerの動的生成と実行
+    // controllerの動的生成と実行a
     private function runAction($controllerName, $action)
     {
         $controllerClass = ucfirst($controllerName) . 'Controller';
         if (!class_exists($controllerClass)) {
             throw new HttpNotFoundException();
         }
-        $controller = new $controllerClass();
+        // Applicationクラスを渡す。Resposeや他の情報を渡したいとなる可能性があるので、それらを所持するこのクラスを渡している。
+        $controller = new $controllerClass($this);
         $content = $controller->run($action);
         $this->response->setContent($content);
     }
@@ -53,16 +58,10 @@ class Application
     {
         return [
             '/' => ['controller' => 'shuffle', 'action' => 'index'],
-            '/shuffle' => ['controller' => 'shuffle', 'action' => 'create'],
+            '/shuffle' => ['controller' => 'shuffle', 'action' => 'index'],
             '/employee' => ['controller' => 'employee', 'action' => 'index'],
             '/employee/create' => ['controller' => 'employee', 'action' => 'create']
         ];
-    }
-
-    // ブラウザがリクエストするパスの情報を取得
-    private function getPathInfo()
-    {
-        return $_SERVER['REQUEST_URI'];
     }
 
     private function render404Page()

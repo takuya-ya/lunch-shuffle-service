@@ -3,6 +3,13 @@
 class Controller
 {
     protected $actionName;
+    protected $request;
+
+    public function __construct($application)
+    {
+        // Requestクラスを呼出し可能にする為、requestプロパティをApplicationから呼出して代入
+        $this->request = $application->request;
+    }
 
     // $actionに'index'
     public function run($action)

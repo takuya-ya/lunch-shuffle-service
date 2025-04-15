@@ -25,6 +25,10 @@ class ShuffleController extends Controller
 
     public function create()
     {
+        if (!$this->request->isPost()) {
+            throw new HttpNotFoundException();
+        }
+        
         $groups = [];
 
         // DBに接続
