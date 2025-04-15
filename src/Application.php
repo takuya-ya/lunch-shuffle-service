@@ -5,13 +5,15 @@
 // 初期設定を行う？
 class Application
 {
-    public $router;
+    protected $router;
+    protected $response;
 
     public function __construct()
     {
         //urlとcontroller,actionの対応表を渡し、Routerがそれを管理する
             // 引数:url => [controller,action]
         $this->router = new Router($this->registerRoutes());
+        $this->response = new Response();
     }
 
     public function run()
@@ -31,6 +33,7 @@ class Application
             $this->render404Page();
         }
 
+        $this->response->send();
     }
 
     // controllerの動的生成と実行
@@ -41,7 +44,8 @@ class Application
             throw new HttpNotFoundException();
         }
         $controller = new $controllerClass();
-        $controller->run($action);
+        $content = $controller->run($action);
+        $this->response->setContent($content);
     }
 
     // 配列で
@@ -63,25 +67,24 @@ class Application
 
     private function render404Page()
     {
-        //HTTPレスポンスのステータスコードを「404 Not Found」に設定するためのPHPコードです。
-        header('HTTP/1.1 404 Page Not Found');
-        $content = <<<EOF
+        $this->response->setStatusCode(404, 'Not Found');
+        $this->response->setContent(
+            <<<EOF
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404</title>
+</head>
 
-        <!DOCTYPE html>
-        <html lang="ja">
-        <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>404</title>
-        </head>
-
-        <body>
-            <h1>
-                404 Page Not Found.
-            </h1>
-        </body>
-        </html>
-EOF;
-        echo $content;
+<body>
+    <h1>
+        404 Page Not Found.
+    </h1>
+</body>
+</html>
+EOF
+        );
     }
 }
