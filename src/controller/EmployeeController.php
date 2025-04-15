@@ -35,6 +35,9 @@ class EmployeeController extends Controller
 
     public function create()
     {
+        if (!$this->request->isPost()) {
+            throw new HttpNotFoundException();
+        }
 
         $errors = [];
 
