@@ -26,7 +26,7 @@ class Application
             // 引数：パス
             // 返り値 $params = [controller => 〇〇, action => 〇〇];
         try {
-            $params = $this->router->resolve($this->getPathInfo());
+            $params = $this->router->resolve($this->request->getPathInfo());
             if (!$params) {
                 throw new HttpNotFoundException();
             };
@@ -40,7 +40,7 @@ class Application
         $this->response->send();
     }
 
-    // controllerの動的生成と実行
+    // controllerの動的生成と実行a
     private function runAction($controllerName, $action)
     {
         $controllerClass = ucfirst($controllerName) . 'Controller';
@@ -62,12 +62,6 @@ class Application
             '/employee' => ['controller' => 'employee', 'action' => 'index'],
             '/employee/create' => ['controller' => 'employee', 'action' => 'create']
         ];
-    }
-
-    // ブラウザがリクエストするパスの情報を取得
-    private function getPathInfo()
-    {
-        return $_SERVER['REQUEST_URI'];
     }
 
     private function render404Page()
